@@ -1,7 +1,6 @@
 ;(function(){
-	function $ (ele) {
-		var obj = document.querySelectorAll(ele);
-		return obj.length == 1 ? obj[0] : obj;
-	}
-
+	var a = document.getElementById('header');
+	tools.turnClass(a, 'cd');
+	tools.turnClass(a, 'cd');
+	var a = [];
 })();

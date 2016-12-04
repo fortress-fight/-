@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Document</title>
+	<style>
+		div {
+			width: 200px;
+			height: 200px;
+			position: absolute;
+		}
+		div:nth-child(1) {
+			left: 100px; top: 100px;
+			background: #58a;
+		}
+		div:nth-child(2) {
+			left: 500px; top: 200px;
+			background: #fb3;
+		}
+	</style>
+</head>
+<body>
+	<div id="box1"></div>
+	<div id="box2"></div>
+	<script>
+
+		function getBound (obj) {
+			return obj.getBoundingClientRect();
+		}
+		function getSize (obj) {
+			return {
+				width: obj.offsetWidth,
+				height: obj.offsetHeight
+			}
+		}
+		function contact (obj1, obj2) {
+			var o1L = getBound(obj1).left;
+			var o1T = getBound(obj1).top;
+			var o1W = getSize(obj1).width;
+			var o1H = getSize(obj1).height;
+
+			var o2L = getBound(obj2).left;
+			var o2T = getBound(obj2).top;
+			var o2W = getSize(obj2).width;
+			var o2H = getSize(obj2).height;
+
+			if ((o1L+o1W) > o2L && o1L < (o2L+o2W) && (o1T + o1H) > o2T && o1T < (o2T+o2H)  ) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+
+		function drag (id) {
+			this.obj = document.getElementById(id);
+			console.log(this.obj)
+			this.inite();
+		}
+		drag.prototype.inite = function () {
+			var _this = this;
+			this.width = getSize(this.obj).width;
+			this.height = getSize(this.obj).height;
+			this.obj.addEventListener('mousedown', fn, false);
+			function fn (ev) {
+				_this.fnDown(ev);
+			}
+		}
+		drag.prototype.fnDown = function (ev) {
+			var _this = this;
+			this.disX = ev.pageX - this.obj.offsetLeft;
+			this.disY = ev.pageY - this.obj.offsetTop;
+			document.addEventListener('mousemove', fn, false);
+			document.addEventListener('mouseup', fn1, false);
+			function fn (ev) {
+				_this.fnMove(ev);
+			}
+			function fn1 () {
+				_this.fnUp(fn, fn1);
+			}
+		}
+
+		drag.prototype.fnMove = function(ev){
+			this.obj.style.left = ev.pageX - this.disX + 'px';
+			this.obj.style.top = ev.pageY - this.disY + 'px';
+			contact (box1, box2)
+		};
+
+		drag.prototype.fnUp = function(fn, fn1){
+			document.removeEventListener('mousemove', fn, false);
+			document.removeEventListener('mouseup', fn1, false);
+		};
+
+		var a = new drag('box1')
+	</script>
+</body>
+</html>
