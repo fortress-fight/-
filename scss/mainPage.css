@@ -392,6 +392,9 @@ body {
   width: 34px;
   height: 30px;
 }
+#mainArea .mainHeader .active {
+  background-position: 0 -320px;
+}
 #mainArea .mainNav {
   line-height: 30px;
 }
@@ -408,15 +411,19 @@ body {
 }
 
 #fileArea {
-  padding-top: 4px;
+  padding: 10px;
 }
 #fileArea a {
   float: left;
-  padding: 20px;
+  position: relative;
+  padding-top: 10px;
   margin-right: 14px;
+  border: 1px solid #fff;
+  text-align: center;
+  width: 110px;
 }
 #fileArea a i {
-  display: block;
+  display: inline-block;
   margin-bottom: 13px;
   width: 64px;
   height: 54px;
@@ -424,13 +431,41 @@ body {
 }
 #fileArea a span {
   display: block;
-  height: 22px;
+  height: 30px;
   text-align: center;
   line-height: 22px;
   color: #000;
 }
+#fileArea a em {
+  display: none;
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  width: 18px;
+  height: 18px;
+  background: url("../img/ico.png") no-repeat 0 -370px;
+}
+#fileArea a .active {
+  background-position-y: -421px;
+}
+#fileArea a input {
+  display: none;
+  position: absolute;
+  bottom: 10px;
+  padding: 0 5px;
+  left: 50%;
+  font-size: 14px;
+  margin-left: -45px;
+  height: 18px;
+  line-height: 18px;
+  width: 80px;
+}
 #fileArea a:hover {
-  background: #e7f2fe;
+  border-color: #c3d8f0;
+  background: #f3f9fe;
+}
+#fileArea a:hover em {
+  display: block;
 }
 
 /*# sourceMappingURL=mainPage.css.map */
