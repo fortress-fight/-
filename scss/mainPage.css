@@ -111,35 +111,31 @@ body {
 }
 
 .smallFileIco,
-.openFileIco,
-.closeFileIco {
+.fileIco {
   position: absolute;
   background: url("../img/folder-tree.png") no-repeat;
 }
 
 .smallFileIco {
   top: 6px;
-  left: 17px;
+  left: -21px;
   width: 15px;
   height: 13px;
 }
 
-.openFileIco {
+.fileIco {
   top: 9px;
-  left: 5px;
-  width: 8px;
-  height: 8px;
-  background-position: -1px -101px;
-}
-
-.closeFileIco {
-  top: 9px;
-  left: 5px;
+  left: -33px;
   width: 8px;
   height: 8px;
   background-position: -1px -52px;
 }
 
+/* .closeFileIco {
+	top: 9px; left: -33px;
+	width: 8px; height: 8px;
+	background-position: -1px -52px;
+} */
 .vipIco {
   left: 13px;
   top: 6px;
@@ -353,20 +349,31 @@ body {
 }
 #fileTree li {
   position: relative;
-  margin-bottom: 1px;
-  padding: 0 0 0 38px;
-  border: 1px solid #fff;
   line-height: 26px;
-  height: 26px;
   cursor: pointer;
+}
+#fileTree li ul {
+  display: none;
+}
+#fileTree .title {
+  padding: 0 0 0 38px;
+  margin-bottom: 1px;
+  border: 1px solid #fff;
+  font-weight: 200;
+}
+#fileTree .title p {
+  position: relative;
+}
+#fileTree .title:hover {
+  background: #e7f2fe;
+  border-color: #bfdaf4;
 }
 #fileTree .focus {
   background: #e7f2fe;
   border-color: #bfdaf4;
 }
-#fileTree li:hover {
-  background: #e7f2fe;
-  border-color: #bfdaf4;
+#fileTree .active .fileIco {
+  background-position: -1px -101px;
 }
 
 /*微云右侧 内容左侧导航 ------> 微云右侧 主要内容区 */
@@ -395,6 +402,9 @@ body {
   margin-right: -14px;
   background: url("../img/main-path.png") no-repeat right -49px;
   color: #000;
+}
+#mainArea .mainNav .lastPath {
+  background-position-y: -199px;
 }
 
 #fileArea {

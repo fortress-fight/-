@@ -1,8 +1,8 @@
-var tools = (function(){
+var tool = (function(){
 	var allTools = {
 		$: function (selector, context) {
 			context = context || document;
-			if (selector.indexOf(' ') === -1) {
+			if (selector.indexOf(' ') !== -1) {
 				return context.querySelectorAll(selector);
 			} else if (selector.charAt(0) === '#') {
 				return document.getElementById(selector.substring(1));
@@ -35,16 +35,16 @@ var tools = (function(){
 					}
 				}
 			}
-			return arr;quotes
+			return arr;
 		},
-		addClass: function (obj, className) {
+		addClass: function (obj, cName) {
 			if (obj.className === '') {
-				obj.className = className;
+				obj.className = cName;
 			} else {
 				var aName = obj.className.split(' ');
-				var _index = this.arrIndexOf(aName, className);
+				var _index = this.arrIndexOf(aName, cName);
 				if (_index === -1) {
-					obj.className += ' ' + className;
+					obj.className += ' ' + cName;
 				}
 			}
 		},
@@ -167,7 +167,7 @@ var tools = (function(){
 		},
 		getBound: function (obj) {
 			return obj.getBoundingClientRect();
-		}
+		},
 		getSize: function (obj) {
 			return {
 				width: obj.offsetWidth,

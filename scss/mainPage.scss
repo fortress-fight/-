@@ -73,26 +73,25 @@ body {
 
 
 .smallFileIco,
-.openFileIco,
-.closeFileIco {
+.fileIco {
 	position: absolute;
 	background: url('../img/folder-tree.png') no-repeat;
 }
 
 .smallFileIco {
-	top: 6px; left: 17px;
+	top: 6px; left: -21px;
 	width: 15px; height: 13px;
 }
-.openFileIco {
-	top: 9px; left: 5px;
-	width: 8px; height: 8px;
-	background-position: -1px -101px;
-}
-.closeFileIco {
-	top: 9px; left: 5px;
+.fileIco {
+	top: 9px; left: -33px;
 	width: 8px; height: 8px;
 	background-position: -1px -52px;
 }
+/* .closeFileIco {
+	top: 9px; left: -33px;
+	width: 8px; height: 8px;
+	background-position: -1px -52px;
+} */
 
 .vipIco {
 	left: 13px; top: 6px;
@@ -296,20 +295,32 @@ body {
 	width: 160px; height: 100%;
 	li {
 		position: relative;
-		margin-bottom: 1px;
-		padding: 0 0 0 38px;
-		border: 1px solid #fff;
 		line-height: 26px;
-		height: 26px;
+		// min-height: 26px;
 		cursor: pointer;
+		ul {
+			display: none;
+		}
+	}
+	.title {
+		padding: 0 0 0 38px;
+		margin-bottom: 1px;
+		border: 1px solid #fff;
+		font-weight: 200;
+		p {
+			position: relative;
+		}
+	}
+	.title:hover {
+		background: #e7f2fe;
+		border-color: #bfdaf4;
 	}
 	.focus {
 		background: #e7f2fe;
 		border-color: #bfdaf4;
 	}
-	li:hover {
-		background: #e7f2fe;
-		border-color: #bfdaf4;
+	.active .fileIco {
+		background-position: -1px -101px;
 	}
 }
 
@@ -337,6 +348,9 @@ body {
 			margin-right: -14px;
 			background: url('../img/main-path.png') no-repeat right -49px;
 			color: #000;
+		}
+		.lastPath {
+			background-position-y: -199px;
 		}
 	}
 }
