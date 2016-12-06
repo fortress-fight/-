@@ -388,9 +388,7 @@ body {
 			width: 18px; height: 18px;
 			background: url('../img/ico.png') no-repeat 0 -370px;
 		}
-		.active {
-			background-position-y: -421px;
-		}
+		
 		input {
 			display: none;
 			position: absolute;
@@ -403,11 +401,22 @@ body {
 			width: 80px;
 		}
 	}
-	a:hover {
+	a:hover,
+	.focus {
 		border-color: #c3d8f0;
 		background: #f3f9fe;
 	}
 	a:hover em {
 		display: block;
+	}
+	.focus {
+		a {
+			border-color: #c3d8f0;
+			background: #f3f9fe;
+		}
+		em {
+			display: block;
+			background-position-y: -421px;
+		}
 	}
 }

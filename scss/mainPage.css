@@ -445,9 +445,6 @@ body {
   height: 18px;
   background: url("../img/ico.png") no-repeat 0 -370px;
 }
-#fileArea a .active {
-  background-position-y: -421px;
-}
 #fileArea a input {
   display: none;
   position: absolute;
@@ -460,12 +457,21 @@ body {
   line-height: 18px;
   width: 80px;
 }
-#fileArea a:hover {
+#fileArea a:hover,
+#fileArea .focus {
   border-color: #c3d8f0;
   background: #f3f9fe;
 }
 #fileArea a:hover em {
   display: block;
+}
+#fileArea .focus a {
+  border-color: #c3d8f0;
+  background: #f3f9fe;
+}
+#fileArea .focus em {
+  display: block;
+  background-position-y: -421px;
 }
 
 /*# sourceMappingURL=mainPage.css.map */
