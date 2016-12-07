@@ -72,6 +72,9 @@
 			checkAll.onclick = function (ev) {
 				ev.cancelBubble = true;
 				_this.selectAll(this);
+
+
+				
 			}
 		},
 		select: function (obj) {
