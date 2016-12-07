@@ -13,7 +13,7 @@ doData.prototype = {
 		for (var i = 0; i < allFile.length; i++) {
 			html += '<a href="javascript:;" dataid = "'+ allFile[i].id +'">'+
 						'<i></i>'+
-						'<span>'+ allFile[i].title +'</span>'+
+						'<span title="'+allFile[i].title+'">'+ allFile[i].title +'</span>'+
 						'<em></em>'+
 						'<input type="text">'+
 					'</a>';

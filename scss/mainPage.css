@@ -379,7 +379,8 @@ body {
 /*微云右侧 内容左侧导航 ------> 微云右侧 主要内容区 */
 /* 头部 */
 #mainArea {
-  padding-left: 184px;
+  margin-left: 184px;
+  height: 100%;
 }
 #mainArea .mainHeader {
   height: 30px;
@@ -435,6 +436,9 @@ body {
   text-align: center;
   line-height: 22px;
   color: #000;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 #fileArea a em {
   display: none;

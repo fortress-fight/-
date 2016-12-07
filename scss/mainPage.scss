@@ -328,7 +328,8 @@ body {
 /* 头部 */
 
 #mainArea {
-		padding-left: 184px;
+		margin-left: 184px;
+		height: 100%;
 	.mainHeader {
 		height: 30px;
 		border-bottom: 1px solid #e6e9f0;
@@ -380,6 +381,9 @@ body {
 			text-align: center;
 			line-height: 22px;
 			color: #000;
+			overflow: hidden;
+			text-overflow: ellipsis;
+			white-space: nowrap;
 		}
 		em {
 			display: none;

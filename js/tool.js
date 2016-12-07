@@ -77,7 +77,7 @@ var tool = (function(){
 					el = el.parentNode;
 				}
 			} else if (selector.charAt(0) === '.') {
-				while (el && this.haveClass(el, selector.substring(1)) && el.nodeType !== 9) {
+				while (el && !this.haveClass(el, selector.substring(1)) && el.nodeType !== 9) {
 					el = el.parentNode;
 				}
 			} else {
