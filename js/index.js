@@ -49,72 +49,32 @@
 	var oFileNav = document.getElementById('mainAreaNav');
 	var aFileNav = oFileNav.getElementsByTagName('a');
 
-	function chooseFile (id, id1) {
-		this.obj = document.getElementById(id);
-		this.checkAll = document.getElementById(id1);
-		this.arr = this.obj.getElementsByTagName('a');
-		this.em = this.obj.getElementsByTagName('em');
-		this.num = 0;
-	}
 
-	chooseFile.prototype = {
-		constructor: chooseFile,
-		choose: function () {
-			var _this = this;
-			for (var i = 0; i < this.arr.length; i++) {
-				var em = this.arr[i].getElementsByTagName('em')[0];
-				em.addEventListener('click', down, false);
-				function down (ev) {
-					ev.cancelBubble = true;
-					_this.select(this)
-				};
-			};
-			checkAll.onclick = function (ev) {
-				ev.cancelBubble = true;
-				_this.selectAll(this);
+	var fileChoose = null;
 
 
-				
-			}
-		},
-		select: function (obj) {
-			if (tool.haveClass(obj.parentNode, 'focus')) {
-				this.num--;
-				tool.removeClass(obj.parentNode, 'focus');
-			} else {
-				tool.addClass(obj.parentNode, 'focus')
-				this.num ++;
-			}
-			if (this.num === this.em.length) {
-				tool.addClass(this.checkAll, 'active');
-			} else {
-				tool.removeClass(this.checkAll, 'active');
-			}
-		},
-		selectAll: function (obj) {
-			if (tool.haveClass(obj, 'active')) {
-				tool.removeClass(obj, 'active')
-				for (var i = 0; i < this.arr.length; i++) {
-					tool.removeClass(this.arr[i], 'focus')
-				}
-			} else {
-				tool.addClass(obj, 'active');
-				for (var i = 0; i < this.arr.length; i++) {
-					tool.addClass(this.arr[i], 'focus')
-				}
-			}
+	addTreeNav.call(treeNav[0])
+
+	tree.addEventListener('click', turn, false);
+
+	function turn (ev) {
+		var ev =ev || window.event;
+		switch (ev.target.tagName.toLowerCase()) {
+			case 'h1':
+			case 'span':
+			case 'p':
+			case 'i':
+				addTreeNav.call(tool.findParent(ev.target, 'h1'))
+				break;
+			default:
+				return false;
+				break;
 		}
 	}
 
 
-	var fileChoose = null;
 
-	addTreeNav.call(treeNav[0])
 
-	for (var i = 0; i < treeNav.length; i++) {
-		treeNav[i].index = i;
-		tool.addEvent(treeNav[i], 'click', addTreeNav);
-	}
 	/**
 	 * 为树形菜单添加事件
 	 * @param {[type]} ev [description]
@@ -123,9 +83,11 @@
 	function addTreeNav (ev) {
 		var ev = ev || window.event;
 		var id = this.getAttribute('data');
+		var addNewFile = document.getElementById('addNewFile');
 		// if (!ev || ev.target.tagName.toLowerCase() != 'h1') {
 			setFileNav (id);
 			setFile (id);
+			addNewFile.setAttribute('dataid', id);
 		// }
 		var par = this.parentNode.parentNode;
 		var chi = par.getElementsByTagName('ul');
@@ -151,10 +113,6 @@
 			tool.removeClass(treeNav[i], 'focus')
 		}
 		tool.addClass(this, 'focus');
-/*		addEv (aFile);
-		addEv (aFileNav);*/
-		fileChoose = new chooseFile ('fileArea', 'checkAll');
-		fileChoose.choose();
 	}
 
 	/**
@@ -172,56 +130,72 @@
 		}
 	}
 
-	function addEv (arr) {
-		/*var checkAll = document.getElementById('checkAll');
-		tool.removeClass(checkAll, 'active');
-		for (var i = 0; i < arr.length; i++) {
-			arr[i].addEventListener('click', function (ev) {
-				if (ev.target.tagName.toLowerCase() !== 'em' && ev.target.tagName.toLowerCase() !== 'input') {
-					var id = this.getAttribute('dataid');
-					for (var i = 0; i < treeNav.length; i++) {
-						if (treeNav[i].getAttribute('data') == id) {
-							tool.removeClass(treeNav[i], 'active');
-							addTreeNav.call(treeNav[i])
+
+	(function (){
+		var mainArea = document.getElementById('mainArea');
+		mainArea.addEventListener('click', fn, false);
+		var obj = document.getElementById('fileArea');
+		var aEm = obj.getElementsByTagName('em');
+		var aArr = obj.getElementsByTagName('a');
+		var checkAll = document.getElementById('checkAll');
+		var addNewFile = document.getElementById('addNewFile');
+		checkAll.onclick = function () {
+			if (tool.haveClass(this, 'active')) {
+				tool.removeClass(this, 'active')
+				for (var i = 0; i < aArr.length; i++) {
+					tool.removeClass(aArr[i], 'focus')
+				}
+			} else {
+				tool.addClass(this, 'active');
+				for (var i = 0; i < aArr.length; i++) {
+					tool.addClass(aArr[i], 'focus')
+				}
+			}
+		}
+		function check () {
+			for (var i = 0; i < aArr.length; i++) {
+				if (!tool.haveClass(aArr[i], 'focus')) {
+					return false;
+				}
+			}
+			return true;
+		}
+		function fn (ev) {
+			switch (ev.target.tagName.toLowerCase()) {
+				case 'em':
+					if (tool.haveClass(ev.target.parentNode, 'focus')) {
+						tool.removeClass(ev.target.parentNode, 'focus');
+					} else {
+						tool.addClass(ev.target.parentNode, 'focus')
+					}
+					if (check ()) {
+						tool.addClass(checkAll, 'active');
+					} else {
+						tool.removeClass(checkAll, 'active');
+					}
+					break;
+				case 'input':
+					// statements_1
+					break;
+				case 'a':
+				case 'i':
+				case 'span':
+					if (!tool.haveClass(ev.target, 'checkBox') && !tool.haveClass(ev.target, 'checkBoxIco')) {
+						tool.removeClass(checkAll, 'active');
+						var id = tool.findParent(ev.target, 'a').getAttribute('dataid');
+						for (var i = 0; i < treeNav.length; i++) {
+							if (treeNav[i].getAttribute('data') == id) {
+								tool.removeClass(treeNav[i], 'active');
+								addTreeNav.call(treeNav[i])
+							}
 						}
 					}
-				}
-			}, false)
-		};*/
-
-	};
-
-
-	var abc = document.getElementById('mainArea');
-	abc.addEventListener('click', fn, false);
-
-	function fn (ev) {
-		// alert(ev.target.tagName.toLowerCase())
-		switch (ev.target.tagName.toLowerCase()) {
-			case 'em':
-				// statements_1
-				break;
-			case 'input':
-				// statements_1
-				break;
-			case 'a':
-			case 'i':
-			case 'span':
-				var checkAll = document.getElementById('checkAll');
-				tool.removeClass(checkAll, 'active');
-				var id = tool.findParent(ev.target, 'a').getAttribute('dataid');
-				for (var i = 0; i < treeNav.length; i++) {
-					if (treeNav[i].getAttribute('data') == id) {
-						tool.removeClass(treeNav[i], 'active');
-						addTreeNav.call(treeNav[i])
-					}
-				}
-				break;
-			default:
-				break;
+					break;
+				default:
+					break;
+			}
 		}
-	}
-
+	})();
 	//////////
 	// 添加交互 //
 	//////////
@@ -231,6 +205,7 @@
 		this.arr = this.obj.getElementsByTagName('a');
 		this.tree = document.getElementById('fileTree');
 		this.aTile = tree.getElementsByTagName('h1');
+		this.new = document.getElementById('addNewFile');
 	}
 
 	DddLittleEvent.prototype = {
@@ -244,6 +219,12 @@
 			var deleteFile = document.getElementById('deleteFile');
 			deleteFile.onclick = function () {
 				_this.deleteEv();
+			}
+			this.new.onclick = function () {
+				_this.addNew(this);
+				for (var i = 0; i < _this.arr.length; i++) {
+					tool.removeClass(_this.arr[i], 'focus');
+				}
 			}
 		},
 		reName: function () {
@@ -259,7 +240,6 @@
 			var text = obj.getElementsByTagName('input')[0];
 			var name = obj.getElementsByTagName('span')[0];
 			text.style.display = 'block';
-			name.style.display = 'none';
 			text.focus();
 			text.onblur = function () {
 				if (this.value !== '') {
@@ -268,11 +248,33 @@
 						return false;
 					}
 					var a = dealD.findSelf(data.files, obj.getAttribute('dataid'));
-					a.title = name.title = name.innerHTML = this.value;
+					if (!a) {
+						dealD.addData(data.files, {
+							title: this.value,
+							pid: _this.new.getAttribute('dataid')
+						})
+						name.title = name.innerHTML = this.value;
+						setNavTree();
+						for (var i = 0; i < _this.aTile.length; i++) {
+							if (_this.aTile[i].getAttribute('data') == _this.new.getAttribute('dataid')) {
+								addTreeNav.call(_this.aTile[i])
+							}
+						}
+					} else {
+						for (var i = 0; i < _this.aTile.length; i++) {
+							if (_this.aTile[i].getAttribute('data') == this.parentNode.getAttribute('dataid')) {
+								_this.aTile[i].getElementsByTagName('span')[0].innerHTML = this.value;
+							}
+						}
+						a.title = name.title = name.innerHTML = this.value;
+					}
+				} else {
+					if (name.innerHTML == '') {
+						this.parentNode.parentNode.removeChild(this.parentNode);
+					}
 				}
 				this.value = '';
 				this.style.display = 'none';
-				name.style.display = 'block';
 				tool.removeClass(obj, 'focus')
 			}
 		},
@@ -308,6 +310,18 @@
 					}
 				}
 			}
+		},
+		addNew: function (obj) {
+			var a = document.createElement('a');
+			a.innerHTML = '<i></i>'+
+						'<span title=""></span>'+
+						'<em></em>'+
+						'<input type="text">';
+			a.href = 'javascript:;';
+			// tool.addClass(a, 'focus');
+			a.dataid = obj.getAttribute('dataid');
+			this.obj.insertBefore(a, this.obj.children[0])
+			this.reNameEv(a);
 		}
 	}
 

@@ -30,14 +30,17 @@ dealData.prototype = {
 		var arr = [];
 		console.log(data)
 		for (var i = 0; i < data.length; i++) {
-			console.log(data[i].id);
+			// console.log(data[i].id);
 			if (data[i].id == index) {
 				arr.push(data[i]);
 				break;
 			}
 		}
-		// console.log(arr);
-		return arr[0];
+		if (arr.length == 1) {
+			return arr[0];
+		} else {
+			return false;
+		}
 	},
 	removeData: function (data, index) {
 		deleteChild (index);
@@ -56,5 +59,26 @@ dealData.prototype = {
 				break;
 			}
 		};
+	},
+	addData: function (data, json) {
+		var newId = data.length;
+		var arr = [];
+		data.sort(function (a,b) {
+			return (a.id - b.id);
+		})
+		for (var i = 0; i < data.length; i++) {
+			if(data[i].id != i){
+				newId = i;
+				break;
+			};
+		}
+		var newJ = {
+			id: newId,
+			pid: json.pid,
+			title: json.title,
+			type:"file"
+		}
+		data.splice(newId, 0, newJ);
+		return newId;
 	}
 };

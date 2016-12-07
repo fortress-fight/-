@@ -2,7 +2,6 @@
 
 function doData (id, data) {
 	this.obj = document.getElementById(id);
-	// console.log(this.obj)
 	this.data = new dealData(data);
 }
 
@@ -28,18 +27,11 @@ doData.prototype = {
 	setTree: function (data, index, indent) {
 		// indent -- 每级缩进
 		indent = indent || 1;
-		/*var onOff = this.data.fondChild(data, index).length > 0 ? true : false;
-		console.log(onOff)
-		if (!onOff) {
-			return '';
-		} else {
-			// var classN = 
-		}*/
 
 		var html = '<ul>';
 
 		for (var i = 0; i < data.length; i++) {
-			if (data[i].pid === index) {
+			if (data[i].pid == index) {
 				var onOff1 = this.data.fondChild(data, data[i].id).length > 0 ? true : false;
 				var className = onOff1 ? 'fileIco' : '';
 				var add = onOff1 ? this.setTree(data, data[i].id, (indent+1)) : '';

@@ -55,11 +55,6 @@ var data = {
 			type:"file"
 		},
 		{
-			id:9000,
-			pid:3000,
-			title:"js初级课程"
-		},
-		{
 			id:8000,
 			pid:3000,
 			title:"js初级课程"
