@@ -379,6 +379,7 @@ body {
 /*微云右侧 内容左侧导航 ------> 微云右侧 主要内容区 */
 /* 头部 */
 #mainArea {
+  position: relative;
   margin-left: 184px;
   height: 100%;
 }
@@ -413,6 +414,7 @@ body {
 
 #fileArea {
   padding: 10px;
+  height: 100%;
 }
 #fileArea a {
   float: left;
@@ -476,6 +478,15 @@ body {
 #fileArea .focus em {
   display: block;
   background-position-y: -421px;
+}
+
+#frameBox {
+  border: 1px solid #c3d8f0;
+  background: blue;
+  opacity: .3;
+  position: absolute;
+  top: 0;
+  left: 0;
 }
 
 /*# sourceMappingURL=mainPage.css.map */

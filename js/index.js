@@ -192,6 +192,7 @@
 					}
 					break;
 				default:
+				// alert(1)
 					break;
 			}
 		}
@@ -325,7 +326,7 @@
 		}
 	}
 
-
+	frame('fileArea');
 	var a = new DddLittleEvent('fileArea');
 	a.init('reName');
 

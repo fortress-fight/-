@@ -328,6 +328,7 @@ body {
 /* 头部 */
 
 #mainArea {
+		position: relative;
 		margin-left: 184px;
 		height: 100%;
 	.mainHeader {
@@ -361,6 +362,7 @@ body {
 
 #fileArea {
 	padding: 10px;
+	height: 100%;
 	a {
 		float: left;
 		position: relative;
@@ -423,4 +425,12 @@ body {
 			background-position-y: -421px;
 		}
 	}
+}
+
+#frameBox {
+	border: 1px solid #c3d8f0;
+	background: blue;
+	opacity: .3;
+	position: absolute;
+	top: 0; left: 0;
 }
