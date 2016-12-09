@@ -244,8 +244,11 @@
 			text.focus();
 			text.onblur = function () {
 				if (this.value !== '') {
+					// var ab = _this.checkName(this.value);
+					// console.log(a)
 					if (!_this.checkName(this.value)) {
-						alert('已存在');
+						// alert('已存在');
+						this.focus();
 						return false;
 					}
 					var a = dealD.findSelf(data.files, obj.getAttribute('dataid'));
@@ -280,14 +283,15 @@
 			}
 		},
 		checkName: function (str) {
+			console.log(this.arr);
 			for (var i = 0; i < this.arr.length; i++) {
 				var aName = this.arr[i].getElementsByTagName('span')[0];
-				if (aName.innerHTML == str) {
+				console.log(aName);
+				if (aName.innerHTML === str) {
 					return false;
-				} else {
-					return true;
 				}
 			}
+			return true;
 		},
 		findSelect: function () {
 			var arr = [];
@@ -304,11 +308,11 @@
 				this.obj.removeChild(arr[i]);
 				dealD.removeData(data.files, arr[i].getAttribute('dataid'));
 			};
+			if (arr.length == 0) {alert('没有选中'); return };
+			setNavTree();
 			for (var i = 0; i < this.aTile.length; i++) {
-				for (var j = 0; j < arr.length; j++) {
-					if (this.aTile[i].getAttribute('data') == arr[j].getAttribute('dataid')) {
-						this.aTile[i].parentNode.parentNode.removeChild(this.aTile[i].parentNode);
-					}
+				if (this.aTile[i].getAttribute('data') == arr[0].getAttribute('datapid')) {
+					addTreeNav.call(this.aTile[i]);
 				}
 			}
 		},
@@ -326,7 +330,11 @@
 		}
 	}
 
+	// frame： 在fileArea中创建了一个框选的功能，由于功能中的内部被框选的是a标签，而且里面还存放了checkAll的按钮，复用性较低，需要注意
 	frame('fileArea');
+	// 为内容区添加交互
+
+
 	var a = new DddLittleEvent('fileArea');
 	a.init('reName');
 

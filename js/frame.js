@@ -6,7 +6,6 @@
 
 function frame (id) {
 			this.obj = document.getElementById(id);
-			
 		};
 
 		;(function(global, factory){
@@ -40,6 +39,7 @@ function frame (id) {
 			this.frame.style.top = ev.clientY - this.pos(this.obj).Y + 'px';
 			this.frame.style.left = ev.clientX - this.pos(this.obj).X + 'px';
 			this.obj.appendChild(this.frame);
+			console.log(ev.target)
 
 			document.addEventListener('mousemove', move, false);
 			document.addEventListener('mouseup', up, false);
@@ -68,7 +68,9 @@ function frame (id) {
 		fnUp: function(fn1, fn2){
 			document.removeEventListener('mousemove', fn1);
 			document.removeEventListener('mouseup', fn2);
-			this.obj.removeChild(this.frame);
+			if (document.getElementById('frameBox')) {
+				this.obj.removeChild(this.frame);
+			}
 		},
 		pos: function (obj) {
 			var setPos = {};
@@ -89,11 +91,9 @@ function frame (id) {
 			for (var i = 0; i < this.target.length; i++) {
 				if (!tool.haveClass(this.target[i], 'focus')) {
 					return;
-				} else {
-					tool.addClass(this.checkAll, 'active');
 				}
 			}
-
+			tool.addClass(this.checkAll, 'active');
 		},
 		contact: function (obj1, obj2) {
 			var o1L = this.pos(obj1).X;
@@ -131,8 +131,8 @@ function frame (id) {
 	};
 
 	frame.init.prototype = frame.prototype;
-		window.frame = frame;
-	});
+	window.frame = frame;
+});
 
 
 

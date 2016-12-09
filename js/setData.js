@@ -10,7 +10,7 @@ doData.prototype = {
 		var html = '';
 		var allFile = this.data.fondChild(data, index)
 		for (var i = 0; i < allFile.length; i++) {
-			html += '<a href="javascript:;" dataid = "'+ allFile[i].id +'">'+
+			html += '<a href="javascript:;" dataid = "'+ allFile[i].id +'" datapid = "'+ allFile[i].pid +'">'+
 						'<i></i>'+
 						'<span title="'+allFile[i].title+'">'+ allFile[i].title +'</span>'+
 						'<em></em>'+
