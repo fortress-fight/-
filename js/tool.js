@@ -72,6 +72,7 @@ var tool = (function(){
 			}
 		},
 		findParent: function (el, selector) {
+			var self = el;
 			if (selector.charAt(0) === '#') {
 				while (el && el.nodeType !== 9 && el.id !== selector.substring(1)) {
 					el = el.parentNode;

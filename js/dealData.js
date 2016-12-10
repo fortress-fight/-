@@ -12,6 +12,18 @@ dealData.prototype = {
 		}
 		return arr;
 	},
+	fondAllChild: function (data, index) {
+		var arr = [],
+			_this = this;
+		for (var i = 0; i < data.length; i++) {
+			if (data[i] && data[i].pid == index) {
+				arr.push(data[i]);
+				arr = arr.concat(_this.fondAllChild(data, data[i].id));
+				// break;
+			}
+		}
+		return arr;
+	},
 	findAllParent: function (data, index) {
 		var arr = [];
 		var _this = this;
@@ -80,5 +92,13 @@ dealData.prototype = {
 		}
 		data.splice(newId, 0, newJ);
 		return newId;
+	},
+	changeData: function (data, id, pid) {
+		for (var i = 0; i < data.length; i++) {
+			if (data[i].id == id) {
+				console.log(pid)
+				data[i].pid = pid;
+			}
+		}
 	}
 };

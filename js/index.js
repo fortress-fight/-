@@ -6,12 +6,28 @@
 		tool.$('#con').style.height = document.documentElement.clientHeight - h + 'px';
 	}
 
+	var tipBox = document.getElementById('tip');
+	function showTip (str, onOff) {
+		if (onOff) {
+			tipBox.className = 'suc';
+		} else {
+			tipBox.className = 'fail';
+		}
+		tipBox.innerHTML = str;
+		tipBox.style.opacity = 1;
+		this.timer = setTimeout(function () {
+			clearTimeout(this.timer);
+			tipBox.style.opacity = 0;
+		}, 1500)
+	}
+
 	// 结构初始化
 
 	var dealD = new dealData();
 
 	var file = new doData('fileArea', data.files);
 	var fileTree = new doData('fileTree', data.files);
+	var littleTree = new doData('littleTree', data.files);
 	var fileNav = new doData('mainAreaNav', data.files);
 
 	// setFile ();
@@ -32,6 +48,11 @@
 		fileTree.setFileTree(data.files, pid);
 	}
 
+	function setlittleTree (pid) {
+		pid = typeof pid == 'undefined' ? -1 : pid;
+		littleTree.setFileTree(data.files, pid);
+	}
+
 	// 搭建文件区头部导航
 	function setFileNav (id) {
 		id = typeof id == 'undefined' ? 0 : id;
@@ -49,6 +70,9 @@
 	var oFileNav = document.getElementById('mainAreaNav');
 	var aFileNav = oFileNav.getElementsByTagName('a');
 
+
+	var smallTree = document.getElementById('littleTree');
+			var smallTreeNav = smallTree.getElementsByTagName('h1');
 
 	var fileChoose = null;
 
@@ -72,6 +96,22 @@
 		}
 	}
 
+	/*function turn1 (ev) {
+		ev.cancelable = true;
+		var ev =ev || window.event;
+		switch (ev.target.tagName.toLowerCase()) {
+			case 'h1':
+			case 'span':
+			case 'p':
+			case 'i':
+				addIco.call(tool.findParent(ev.target, 'h1'),smallTreeNav)
+				break;
+			default:
+				return false;
+				break;
+		}
+	}*/
+
 
 
 
@@ -81,17 +121,26 @@
 	 */
 
 	function addTreeNav (ev) {
-		var ev = ev || window.event;
+		addIco.call(this, treeNav)
 		var id = this.getAttribute('data');
 		var addNewFile = document.getElementById('addNewFile');
-		// if (!ev || ev.target.tagName.toLowerCase() != 'h1') {
-			setFileNav (id);
-			setFile (id);
-			addNewFile.setAttribute('dataid', id);
+		setFileNav (id);
+		setFile (id);
+		addNewFile.setAttribute('dataid', id);
+		window.nowPagePid = id;
+		parAddClass (this.getAttribute('datapid'));
+		// for (var i = 0; i < treeNav.length; i++) {
+		// 	tool.removeClass(treeNav[i], 'focus')
 		// }
+		// tool.addClass(this, 'focus');
+	}
+
+
+	function addIco (obj) {
 		var par = this.parentNode.parentNode;
 		var chi = par.getElementsByTagName('ul');
-
+		var self = this;
+		// console.log(obj)
 		if (tool.haveClass(this, 'active')) {
 			this.nextElementSibling.style.display = 'none';
 			tool.removeClass(this, 'active');
@@ -108,9 +157,16 @@
 				tool.removeClass(chi[i].previousElementSibling, 'active')
 			}
 		}
-		parAddClass (this.getAttribute('datapid'));
-		for (var i = 0; i < treeNav.length; i++) {
-			tool.removeClass(treeNav[i], 'focus')
+		/*console.log(tool.findParent(self, 'ul'));
+		while (tool.findParent(self, 'ul') && tool.findParent(self, 'ul') != self) {
+			tool.findParent(self, 'ul').style.display = 'block';
+			self = tool.findParent(self, 'ul');
+			console.log(tool.findParent(self, 'ul') != self)
+			console.log(self)
+		}*/
+		parAddClass1 (this.getAttribute('datapid'));
+		for (var i = 0; i < obj.length; i++) {
+			tool.removeClass(obj[i], 'focus')
 		}
 		tool.addClass(this, 'focus');
 	}
@@ -130,6 +186,15 @@
 		}
 	}
 
+	function parAddClass1 (pid) {
+		for (var i = 0; i < smallTreeNav.length; i++) {
+			if (smallTreeNav[i].getAttribute('data') == pid) {
+				tool.addClass(smallTreeNav[i], 'active');
+				smallTreeNav[i].nextElementSibling.style.display = 'block';
+				parAddClass (smallTreeNav[i].getAttribute('datapid'))
+			}
+		}
+	}
 
 	(function (){
 		var mainArea = document.getElementById('mainArea');
@@ -207,6 +272,7 @@
 		this.tree = document.getElementById('fileTree');
 		this.aTile = tree.getElementsByTagName('h1');
 		this.new = document.getElementById('addNewFile');
+		this.move = document.getElementById('moveTo');
 	}
 
 	DddLittleEvent.prototype = {
@@ -227,13 +293,16 @@
 					tool.removeClass(_this.arr[i], 'focus');
 				}
 			}
+			this.move.onclick = function () {
+				_this.moveEv();
+			}
 		},
 		reName: function () {
 			var arr = this.findSelect();
 			if (arr.length === 1) {
 				this.reNameEv(arr[0]);
 			} else {
-				 alert('只能修改一个');
+				showTip('请选中一个', false)
 			}
 		},
 		reNameEv: function (obj) {
@@ -245,9 +314,8 @@
 			text.onblur = function () {
 				if (this.value !== '') {
 					// var ab = _this.checkName(this.value);
-					// console.log(a)
 					if (!_this.checkName(this.value)) {
-						// alert('已存在');
+						showTip('已存在', false)
 						this.focus();
 						return false;
 					}
@@ -271,6 +339,7 @@
 							}
 						}
 						a.title = name.title = name.innerHTML = this.value;
+						showTip('修改成功', true);
 					}
 				} else {
 					if (name.innerHTML == '') {
@@ -283,10 +352,8 @@
 			}
 		},
 		checkName: function (str) {
-			console.log(this.arr);
 			for (var i = 0; i < this.arr.length; i++) {
 				var aName = this.arr[i].getElementsByTagName('span')[0];
-				console.log(aName);
 				if (aName.innerHTML === str) {
 					return false;
 				}
@@ -308,7 +375,7 @@
 				this.obj.removeChild(arr[i]);
 				dealD.removeData(data.files, arr[i].getAttribute('dataid'));
 			};
-			if (arr.length == 0) {alert('没有选中'); return };
+			if (arr.length == 0) {showTip('请选中文件', false); return };
 			setNavTree();
 			for (var i = 0; i < this.aTile.length; i++) {
 				if (this.aTile[i].getAttribute('data') == arr[0].getAttribute('datapid')) {
@@ -323,10 +390,76 @@
 						'<em></em>'+
 						'<input type="text">';
 			a.href = 'javascript:;';
-			// tool.addClass(a, 'focus');
+		// tool.addClass(a, 'focus');
 			a.dataid = obj.getAttribute('dataid');
 			this.obj.insertBefore(a, this.obj.children[0])
 			this.reNameEv(a);
+		},
+		moveEv: function (obj) {
+			var _this =  this;
+			var arr = this.findSelect();
+			var index = 0;
+			if (arr.length == 0) {showTip('请选中文件', false); return };
+			
+			setlittleTree();
+			addIco.call(smallTreeNav[0],smallTreeNav);
+			// console.log(1)
+			for (var i = 0; i < smallTreeNav.length; i++) {
+				if (smallTreeNav[i].getAttribute('data') == window.nowPagePid) {
+					// console.log(smallTreeNav[i])
+					addIco.call(smallTreeNav[i],smallTreeNav);
+				}
+			}
+
+			var con = document.getElementById('moveToArea')
+			var confirm = document.querySelector('#moveToArea .confirm');
+			var cancel = document.querySelector('#moveToArea .cancel');
+			con.style.display = 'block';
+			cancel.onclick = function () {
+				con.style.display = 'none';
+			}
+
+			smallTree.onclick = function (ev) {
+				var farther = tool.findParent(ev.target, 'h1');
+				addIco.call(farther,smallTreeNav);
+				index = farther.getAttribute('data');
+				var dataArr = dealD.fondAllChild(data.files, farther.getAttribute('data'));
+				// var dataArr1 = dealD.fondChild(data.files, window.nowPagePid);
+				// console.log(dataArr)
+				for (var i = 0; i < arr.length; i++) {
+					if (arr[i].getAttribute('dataid') == index) {
+						showTip('不能将文件移动到子文件下', false);
+						confirm.onclick = function () {
+							showTip('不能将文件移动到子文件下', false);
+						};
+					} else {
+						confirm.onclick = function () {
+							for (var i = 0; i < arr.length; i++) {
+								dealD.changeData(data.files, arr[i].getAttribute('dataid'), index);
+								console.log(index)
+								arr[i].setAttribute('datapid', index);
+								con.style.display = 'none';
+								setNavTree();
+							}
+							for (var i = 0; i < arr.length; i++) {
+								_this.obj.removeChild(arr[i]);
+							};
+							for (var i = 0; i < _this.aTile.length; i++) {
+								if (_this.aTile[i].getAttribute('data') == index) {
+									addTreeNav.call(_this.aTile[i]);
+								}
+							}
+						};
+					}
+				}
+				/*for (var i = 0; i < dataArr.length; i++) {
+					console.log(dataArr[i].id, window.nowPagePid)
+					if(window.nowPagePid == dataArr[i].id) {
+					}
+				}*/
+			}
+			
+			
 		}
 	}
 

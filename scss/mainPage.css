@@ -489,4 +489,133 @@ body {
   left: 0;
 }
 
+#moveToArea {
+  display: none;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(255, 255, 255, 0.5);
+  z-index: 5;
+}
+#moveToArea .conArea {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  width: 450px;
+  height: 482px;
+  border: 1px solid #c8ccd3;
+  margin: auto;
+  background: #fff;
+}
+#moveToArea .conArea header {
+  padding-left: 18px;
+  height: 60px;
+  line-height: 60px;
+  font-size: 18px;
+  border-bottom: 1px solid #c8ccd3;
+}
+#moveToArea .conArea .files {
+  height: 97px;
+}
+#moveToArea .conArea .btns {
+  float: right;
+}
+#moveToArea .conArea .btns a {
+  display: inline-block;
+  width: 92px;
+  height: 36px;
+  margin-right: 25px;
+  border: 1px solid #c7c9cf;
+  line-height: 34px;
+  height: 34px;
+  text-align: center;
+  color: #000;
+}
+#moveToArea .conArea .btns .confirm {
+  background: #93c6f9;
+  color: #fff;
+}
+#moveToArea .navArea {
+  margin: 0 auto 24px;
+  width: 400px;
+  height: 238px;
+  border: 1px solid #dedede;
+}
+#moveToArea .navArea .path {
+  height: 37px;
+  line-height: 37px;
+  font-size: 14px;
+  padding: 0 10px;
+  border-bottom: 1px solid #dedede;
+}
+
+#littleTree {
+  z-index: 10;
+  margin: auto;
+  height: 200px;
+  background: #fff;
+  overflow: auto;
+}
+#littleTree li {
+  position: relative;
+  line-height: 26px;
+  cursor: pointer;
+}
+#littleTree li ul {
+  display: none;
+}
+#littleTree .title {
+  padding: 0 0 0 38px;
+  margin-bottom: 1px;
+  border: 1px solid #fff;
+  font-weight: 200;
+}
+#littleTree .title p {
+  position: relative;
+}
+#littleTree .title:hover {
+  background: #e7f2fe;
+  border-color: #bfdaf4;
+}
+#littleTree .focus {
+  background: #e7f2fe;
+  border-color: #bfdaf4;
+}
+#littleTree .active .fileIco {
+  background-position: -1px -101px;
+}
+
+#tip {
+  height: 32px;
+  width: 222px;
+  text-align: center;
+  line-height: 32px;
+  font-size: 14px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  margin: 0 auto;
+  z-index: 10;
+  opacity: 0;
+}
+
+.suc {
+  color: #000;
+  background: #eaffda;
+  border: 1px solid #a7c98e;
+  border-top-width: 0;
+}
+
+.fail {
+  color: #fff;
+  background: #f49918;
+  border: 1px solid #f49918;
+  border-top-width: 0;
+}
+
 /*# sourceMappingURL=mainPage.css.map */
